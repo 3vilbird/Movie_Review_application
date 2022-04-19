@@ -24,12 +24,12 @@ namespace movieService.Services
             return new MovieList() { status = BuisnessStatus.Ok, movies = _data };
         }
         // ADD A RECORD
-        public async Task<ResponseStatus> AddMovie(MovieDTO movie)
+        public async Task<AddMovieResponse> AddMovie(MovieDTO movie)
         {
             var _movie = _mapper.Map<TblMovie>(movie);
             _context.TblMovies.Add(_movie);
             await _context.SaveChangesAsync();
-            return new ResponseStatus() { status = BuisnessStatus.Created, ResponseMessage = "Movie add sucessfully" };
+            return new AddMovieResponse() { Id = _movie.Id, status = BuisnessStatus.Created, ResponseMessage = "Movie add sucessfully" };
         }
         // UPDATE A RECORD
         public async Task<ResponseStatus> UpdateMovie(MovieDTO movie, int id)

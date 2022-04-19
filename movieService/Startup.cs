@@ -32,6 +32,24 @@ namespace movieService
             services.AddTransient<GlobalExceptionHandler>();
             services.AddControllers();
             services.AddTransient<IMovieService, MovieService>();
+        
+
+            services.AddCors(options =>
+            {
+
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+
+                });
+
+            }
+
+              );
+
+
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "movieService", Version = "v1" });
@@ -52,8 +70,10 @@ namespace movieService
                     c.RoutePrefix = string.Empty;
                 });
             }
+
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors();
             app.UseMiddleware<GlobalExceptionHandler>();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

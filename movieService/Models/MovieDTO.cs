@@ -11,6 +11,18 @@ namespace movieService.Models
     }
 
 
+    public class AddMovieResponse : ResponseStatus
+    {
+
+        public int Id { get; set; }
+    }
+
+
+
+
+
+
+
 
     public class MovieList : ResponseStatus
 
