@@ -11,7 +11,7 @@ namespace movieService.Controllers
 {
 
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     public class MovieController : ControllerBase
     {
         private readonly IMovieService _IMovieService;

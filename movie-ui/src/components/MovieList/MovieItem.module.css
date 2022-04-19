@@ -11,6 +11,11 @@
     color:#f63321
 }
 
+.editicon{
+  color:#33eb0a
+
+}
+
 
   .moviecomment {
     display: flex;
@@ -40,3 +45,21 @@
     border-radius: 12px;
   }
   
+
+  .control {
+    margin: 1rem 0;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    text-align: left; 
+
+  }
+
+ 
+  .control input {
+    flex: 3;
+    font: inherit;
+    padding: 0.35rem 0.35rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }

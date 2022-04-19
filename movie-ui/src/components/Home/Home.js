@@ -3,49 +3,39 @@ import Addmovie from "../AddMovie/Addmovie";
 import classes from "./Home.module.css";
 import MovieItem from "../MovieList/MovieItem";
 import Card from "../UI/Card/Card";
+import swal from "sweetalert";
 
-import { getdata, AddMoive } from "../Endpoints/Endpoints";
-const data = [
-  {
-    id: 1,
-    movieName: "KGF",
-    reviewComments: "Out of the box 5 start",
-  },
-  {
-    id: 2,
-    movieName: "Beastupdated",
-    reviewComments: "the best acting from vijay and poja ",
-  },
-  {
-    id: 4,
-    movieName: "Lovemoktail2",
-    reviewComments: "the best moive",
-  },
-];
-
+import {
+  getdata,
+  AddMoive,
+  deleteMovie,
+  editMovie,
+} from "../Endpoints/Endpoints";
 const Home = (props) => {
   const [movieList, setMovie] = useState([]);
 
   useEffect(() => {
-    // getdata().then((response) => {
-    //   setMovie(response.movies);
-    // });
+    getdata().then((response) => {
+      setMovie(response.movies);
+    });
 
-    setMovie(data);
+    // setMovie(data);
   }, []);
 
   const HandleAddMovie = (movie) => {
-    //
     console.log(movie);
     AddMoive(movie).then((response) => {
       if (response.status == 2) {
         setMovie((prev) => {
           return [{ ...movie, id: response.id }, ...prev];
         });
+
+        swal({
+          text: "MovieAdded",
+          icon: "success",
+        });
       }
     });
-
-    // and plese inser the id do't forget
   };
 
   const HandleDelete = (id) => {
@@ -58,13 +48,34 @@ const Home = (props) => {
     });
   };
 
+  const HandleEdit = (movie, id) => {
+    //
+
+    editMovie(movie, id).then((res) => {
+      if (res.status != 3) {
+        //
+        swal({
+          text: "Oops something went wrong Please try later!",
+          icon: "error",
+        });
+      }
+    });
+
+    console.log(movie, id);
+  };
+
   return (
     <React.Fragment>
       <Addmovie HandleAddMovie={HandleAddMovie} />
       {movieList.length > 0 && (
         <Card className={classes.container}>
           {movieList.map((item) => (
-            <MovieItem key={item.id} item={item} HandleDelete={HandleDelete} />
+            <MovieItem
+              key={item.id}
+              item={item}
+              HandleDelete={HandleDelete}
+              HandleEdit={HandleEdit}
+            />
           ))}
         </Card>
       )}
